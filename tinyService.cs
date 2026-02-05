@@ -281,17 +281,24 @@ namespace AppZone
             TimeSpan time = localNow.TimeOfDay;
             TimeSpan weekdayStart = new TimeSpan(6, 55, 0); // 6:55 AM Philippines time
             TimeSpan weekdayEnd = new TimeSpan(10, 15, 0); // 10:15 AM Philippines time
+            TimeSpan weekdayEveningStart = new TimeSpan(19, 0, 0); // 7:00 PM Philippines time
+            TimeSpan weekdayEveningEnd = new TimeSpan(21, 0, 0); // 9:00 PM Philippines time
 
             bool weekdayWindow = day >= DayOfWeek.Monday &&
                                  day <= DayOfWeek.Friday &&
                                  time >= weekdayStart &&
                                  time <= weekdayEnd;
 
+            bool weekdayEveningWindow = day >= DayOfWeek.Monday &&
+                                        day <= DayOfWeek.Friday &&
+                                        time >= weekdayEveningStart &&
+                                        time <= weekdayEveningEnd;
+
             bool weekendWindow = (day == DayOfWeek.Saturday && time >= weekdayStart) ||
                                  (day == DayOfWeek.Sunday) ||
                                  (day == DayOfWeek.Monday && time <= weekdayStart);
 
-            return !(weekdayWindow || weekendWindow);
+            return !(weekdayWindow || weekdayEveningWindow || weekendWindow);
         }
 
         private static string NormalizeProcessName(string name)
